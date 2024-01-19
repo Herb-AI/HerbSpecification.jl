@@ -25,22 +25,20 @@ struct SMTSpecification <: AbstractFormalSpecification
     formula::Function
 end
 
-"""
-    struct AgdaSpecification <: AbstractFormalSpecification
-
-"""
-struct AgdaSpecification <: AbstractFormalSpecification
-    formula::Function
-end
-
 
 abstract type AbstractTypeSpecification end
 
 """
-    struct DependentTypeSpecification <: AbstractTypeSpecification
+    struct AbstractDependentTypeSpecification <: AbstractTypeSpecification
 
 """
-struct DependentTypeSpecification <: AbstractTypeSpecification
+abstract type AbstractDependentTypeSpecification <: AbstractTypeSpecification end
+
+"""
+    struct AgdaSpecification <: AbstractDependentTypeSpecification
+
+"""
+struct AgdaSpecification <: AbstractDependentTypeSpecification
     formula::Function
 end
 
