@@ -4,21 +4,18 @@ include("problem.jl")
 
 export 
     Problem,
+    MetricProblem,
     AbstractSpecification,
 
-    AbstractIOSpecification,
     IOExample,
-    IOSpecification,
-    IOMetricSpecification,
 
     AbstractFormalSpecification,
     SMTSpecification,
     AgdaSpecification,
 
     Trace,
-    TraceSpecification,
 
-    TypeSpecification,
+    AbstractTypeSpecification,
     DependentTypeSpecification
 
 end # module HerbSpecification
