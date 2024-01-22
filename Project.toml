@@ -1,6 +1,6 @@
 name = "HerbSpecification"
 uuid = "6d54aada-062f-46d8-85cf-a1ceaf058a06"
-authors = ["Tilman Hinnerichs <tilman@hinnerichs.com>"]
+authors = ["Tilman Hinnerichs <t.r.hinnerichs@tudelft.nl>"]
 version = "0.1.0"
 
 [deps]
