@@ -11,11 +11,11 @@ export
 
     AbstractFormalSpecification,
     SMTSpecification,
-    AgdaSpecification,
 
     Trace,
 
     AbstractTypeSpecification,
-    DependentTypeSpecification
+    DependentTypeSpecification,
+    AgdaSpecification
 
 end # module HerbSpecification

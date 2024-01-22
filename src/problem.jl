@@ -10,7 +10,12 @@ struct IOExample
     out::Any
 end
 
-# abstract type Trace end #@TODO combine with Gen.jl
+"""
+    struct Trace
+
+A trace defining a wanted program execution for program synthesis. 
+@TODO combine with Gen.jl
+"""
 struct Trace
     exec_path::Vector{Any}
 end
@@ -20,6 +25,7 @@ abstract type AbstractFormalSpecification end
 """
     struct SMTSpecification <: AbstractFormalSpecification
 
+A specification based on a logical formula defined by a SMT solver.
 """
 struct SMTSpecification <: AbstractFormalSpecification
     formula::Function
@@ -31,12 +37,14 @@ abstract type AbstractTypeSpecification end
 """
     struct AbstractDependentTypeSpecification <: AbstractTypeSpecification
 
+Defines a specification through dependent types. Needs a concrete type checker as oracle.
 """
 abstract type AbstractDependentTypeSpecification <: AbstractTypeSpecification end
 
 """
     struct AgdaSpecification <: AbstractDependentTypeSpecification
 
+Defines a specification 
 """
 struct AgdaSpecification <: AbstractDependentTypeSpecification
     formula::Function
@@ -47,7 +55,7 @@ const AbstractSpecification = Union{Vector{IOExample}, AbstractFormalSpecificati
 """
     struct Problem
 
-Program synthesis problem defined with a vector of [`AbstractSpecification`](@ref)s. 
+Program synthesis problem defined by an [`AbstractSpecification`](@ref)s. Has a name and a specification of type `T`.
 
 !!! warning
     Please care that concrete `Problem` types with different values of `T` are never subtypes of each other. 
@@ -64,7 +72,11 @@ struct Problem{T <: AbstractSpecification}
     end
 end
 
+"""
+    struct MetricProblem{T <: Vector{IOExample}}
 
+Program synthesis problem defined by an specification and a metric. The specification has to be based on input/output examples, while the function needs to return a numerical value.
+"""
 struct MetricProblem{T <: Vector{IOExample}}
     name::AbstractString
     cost_function::Function
@@ -84,7 +96,7 @@ end
 """
     Base.getindex(p::Problem{Vector{IOExample}}, indices)
 
-Overwrite `Base.getindex` to access allow for slicing of problems.
+Overwrite `Base.getindex` to allow for slicing of input/output-based problems.
 """
 Base.getindex(p::Problem{Vector{IOExample}}, indices) = Problem(p.spec[indices])
 Base.getindex(p::MetricProblem{Vector{IOExample}}, indices) = Problem(p.spec[indices])
