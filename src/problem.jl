@@ -2,7 +2,7 @@
     struct IOExample
 
 An input-output example.
-`in` is a [`Dict`](@ref) of `{Symbol,Any}` where the symbol represents a variable in a program.
+`in` is a `Dict` of `{Symbol,Any}` where the symbol represents a variable in a program.
 `out` can be anything.
 """
 struct IOExample
@@ -55,7 +55,7 @@ const AbstractSpecification = Union{Vector{IOExample}, AbstractFormalSpecificati
 """
     struct Problem
 
-Program synthesis problem defined by an [`AbstractSpecification`](@ref)s. Has a name and a specification of type `T`.
+Program synthesis problem defined by an `AbstractSpecification`. Has a name and a specification of type `T`.
 
 !!! warning
     Please care that concrete `Problem` types with different values of `T` are never subtypes of each other. 
