@@ -31,7 +31,6 @@ struct SMTSpecification <: AbstractFormalSpecification
     formula::Function
 end
 
-
 abstract type AbstractTypeSpecification end
 
 """
@@ -50,7 +49,8 @@ struct AgdaSpecification <: AbstractDependentTypeSpecification
     formula::Function
 end
 
-const AbstractSpecification = Union{Vector{IOExample}, AbstractFormalSpecification, Vector{Trace}, AbstractTypeSpecification}
+const AbstractSpecification = Union{Vector{IOExample}, AbstractFormalSpecification,
+    Vector{Trace}, AbstractTypeSpecification}
 
 """
     struct Problem
@@ -64,10 +64,10 @@ struct Problem{T <: AbstractSpecification}
     name::AbstractString
     spec::T
 
-    function Problem(spec::T) where T <: AbstractSpecification
+    function Problem(spec::T) where {T <: AbstractSpecification}
         new{T}("", spec)
     end
-    function Problem(name::AbstractString, spec::T) where T <: AbstractSpecification
+    function Problem(name::AbstractString, spec::T) where {T <: AbstractSpecification}
         new{T}(name, spec)
     end
 end
@@ -82,16 +82,15 @@ struct MetricProblem{T <: Vector{IOExample}}
     cost_function::Function
     spec::T
 
-    function MetricProblem(cost_function::Function, spec::T) where T<:Vector{IOExample}
+    function MetricProblem(cost_function::Function, spec::T) where {T <: Vector{IOExample}}
         new{T}("", cost_function, spec)
     end
 
-    function MetricProblem(name::AbstractString, cost_function::Function, spec::T) where T<:Vector{IOExample}
+    function MetricProblem(name::AbstractString, cost_function::Function,
+            spec::T) where {T <: Vector{IOExample}}
         new{T}(name, cost_function, spec)
     end
-
 end
-
 
 """
     Base.getindex(p::Problem{Vector{IOExample}}, indices)
@@ -100,5 +99,3 @@ Overwrite `Base.getindex` to allow for slicing of input/output-based problems.
 """
 Base.getindex(p::Problem{Vector{IOExample}}, indices) = Problem(p.spec[indices])
 Base.getindex(p::MetricProblem{Vector{IOExample}}, indices) = Problem(p.spec[indices])
-
-
