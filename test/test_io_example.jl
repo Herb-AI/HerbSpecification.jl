@@ -11,7 +11,10 @@ end
 # Tests for Problem
 @testset "Problem Tests" begin
     # Create a vector of IOExample instances as specification
-    spec = [IOExample(Dict(:var1 => 1, :var2 => 2), 3), IOExample(Dict(:var1 => 4, :var2 => 5), 6)]
+    spec = [
+        IOExample(Dict(:var1 => 1, :var2 => 2), 3),
+        IOExample(Dict(:var1 => 4, :var2 => 5), 6),
+    ]
 
     # Test constructor without a name
     problem1 = Problem(spec)

@@ -1,0 +1,25 @@
+# Changes here will be overwritten by Copier
+AddAllcontributors: false
+AddCodeOfConduct: true
+AddContributionDocs: false
+AddCopierCI: false
+AddGitHubTemplates: true
+AddMacToCI: true
+AddPrecommit: true
+AddWinToCI: true
+AnswerStrategy: ask
+Authors: Tilman Hinnerichs <t.r.hinnerichs@tudelft.nl>
+AutoIncludeTests: true
+CodeOfConductContact: t.r.hinnerichs@tudelft.nl
+Indentation: 4
+JuliaMinCIVersion: '1.8'
+JuliaMinVersion: '1.8'
+License: MIT
+LicenseCopyrightHolders: Herb-AI
+PackageName: HerbSpecification
+PackageOwner: Herb-AI
+PackageUUID: 6d54aada-062f-46d8-85cf-a1ceaf058a06
+RunJuliaNightlyOnCI: true
+UseCirrusCI: false
+_commit: v0.10.1
+_src_path: https://github.com/abelsiqueira/BestieTemplate.jl

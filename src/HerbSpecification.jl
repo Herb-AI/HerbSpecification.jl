@@ -2,18 +2,13 @@ module HerbSpecification
 
 include("problem.jl")
 
-export 
-    Problem,
+export Problem,
     MetricProblem,
     AbstractSpecification,
-
     IOExample,
-
     AbstractFormalSpecification,
     SMTSpecification,
-
     Trace,
-
     AbstractTypeSpecification,
     DependentTypeSpecification,
     AgdaSpecification
