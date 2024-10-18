@@ -34,3 +34,33 @@ end
     @test subproblem.spec == spec[1:2]
     @test subproblem.name == ""
 end
+
+# Tests for MetricProblem
+@testset "MetricProblem Tests" begin
+    # Create a vector of IOExample instances as specification
+    spec = [
+        IOExample(Dict(:var1 => 1, :var2 => 2), 3),
+        IOExample(Dict(:var1 => 4, :var2 => 5), 6),
+        IOExample(Dict(:var1 => 7, :var2 => 8), 9),
+    ]
+    cost_function(x) = 23
+
+    # Test constructor without a name
+    metric1 = MetricProblem(cost_function, spec)
+    @test metric1.name == ""
+    @test metric1.spec === spec
+    @test metric1.cost_function === cost_function
+
+    # Test constructor with a name
+    name = "Test Metric"
+    metric2 = MetricProblem(name, cost_function, spec)
+    @test metric2.name == name
+    @test metric2.spec === spec
+    @test metric2.cost_function === cost_function
+
+    # Test getindex
+    submetric = metric2[1:2]
+    @test isa(submetric, Problem)
+    @test submetric.spec == spec[1:2]
+    @test submetric.name == ""
+end
