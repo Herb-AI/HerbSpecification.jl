@@ -11,7 +11,11 @@ end
 # Tests for Problem
 @testset "Problem Tests" begin
     # Create a vector of IOExample instances as specification
-    spec = [IOExample(Dict(:var1 => 1, :var2 => 2), 3), IOExample(Dict(:var1 => 4, :var2 => 5), 6)]
+    spec = [
+        IOExample(Dict(:var1 => 1, :var2 => 2), 3),
+        IOExample(Dict(:var1 => 4, :var2 => 5), 6),
+        IOExample(Dict(:var1 => 7, :var2 => 8), 9),
+    ]
 
     # Test constructor without a name
     problem1 = Problem(spec)
@@ -23,4 +27,10 @@ end
     problem2 = Problem(problem_name, spec)
     @test problem2.name == problem_name
     @test problem2.spec === spec
+
+    # Test getindex
+    subproblem = problem2[1:2]
+    @test isa(subproblem, Problem)
+    @test subproblem.spec == spec[1:2]
+    @test subproblem.name == ""
 end
