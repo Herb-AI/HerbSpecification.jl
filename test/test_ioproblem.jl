@@ -10,29 +10,38 @@ end
 
 # Tests for Problem
 @testset "Problem Tests" begin
-    # Create a vector of IOExample instances as specification
-    spec = [
-        IOExample(Dict(:var1 => 1, :var2 => 2), 3),
-        IOExample(Dict(:var1 => 4, :var2 => 5), 6),
-        IOExample(Dict(:var1 => 7, :var2 => 8), 9),
+    # Example specs to use in the below tests.
+    specs = [
+         [
+            IOExample(Dict(:var1 => 1, :var2 => 2), 3),
+            IOExample(Dict(:var1 => 4, :var2 => 5), 6),
+            IOExample(Dict(:var1 => 7, :var2 => 8), 9),
+        ],
+        AgdaSpecification(x -> 23),
+        SMTSpecification(x -> 23),
+        [Trace(["some", "exec", "path"]), Trace(["another", "path"])],
     ]
 
-    # Test constructor without a name
-    problem1 = Problem(spec)
-    @test problem1.name == ""
-    @test problem1.spec === spec
+    @testset "$(typeof(spec))" for spec in specs
+        # Test constructor without a name
+        problem1 = Problem(spec)
+        @test problem1.name == ""
+        @test problem1.spec === spec
 
-    # Test constructor with a name
-    problem_name = "Test Problem"
-    problem2 = Problem(problem_name, spec)
-    @test problem2.name == problem_name
-    @test problem2.spec === spec
+        # Test constructor with a name
+        problem_name = "Test Problem"
+        problem2 = Problem(problem_name, spec)
+        @test problem2.name == problem_name
+        @test problem2.spec === spec
 
-    # Test getindex
-    subproblem = problem2[1:2]
-    @test isa(subproblem, Problem)
-    @test subproblem.spec == spec[1:2]
-    @test subproblem.name == ""
+        if spec isa Vector{<:IOExample}
+            # Test getindex
+            subproblem = problem2[1:2]
+            @test isa(subproblem, Problem)
+            @test subproblem.spec == spec[1:2]
+            @test subproblem.name == ""
+        end
+    end
 end
 
 # Tests for MetricProblem
