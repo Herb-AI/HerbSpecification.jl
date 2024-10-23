@@ -99,6 +99,6 @@ end
 Overwrite `Base.getindex` to allow for slicing of input/output-based problems.
 """
 Base.getindex(p::Problem{Vector{IOExample}}, indices) = Problem(p.spec[indices])
-Base.getindex(p::MetricProblem{Vector{IOExample}}, indices) = Problem(p.spec[indices])
+Base.getindex(p::MetricProblem{Vector{IOExample}}, indices) = MetricProblem(p.cost_function, p.spec[indices])
 
 

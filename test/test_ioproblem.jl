@@ -69,7 +69,8 @@ end
 
     # Test getindex
     submetric = metric2[1:2]
-    @test isa(submetric, Problem)
+    @test isa(submetric, MetricProblem)
     @test submetric.spec == spec[1:2]
     @test submetric.name == ""
+    @test submetric.cost_function === cost_function
 end
