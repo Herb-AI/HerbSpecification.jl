@@ -15,7 +15,7 @@ export
     Trace,
 
     AbstractTypeSpecification,
-    DependentTypeSpecification,
+    AbstractDependentTypeSpecification,
     AgdaSpecification
 
 end # module HerbSpecification
