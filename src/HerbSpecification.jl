@@ -1,5 +1,7 @@
 module HerbSpecification
 
+using AutoHashEquals
+
 include("problem.jl")
 
 export 

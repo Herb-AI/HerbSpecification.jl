@@ -50,6 +50,12 @@ end
             @test subproblem.name == problem_name
         end
     end
+
+    @testset "Test Equality" begin
+        p₁ = Problem([IOExample(Dict(:x => 1), 1)])
+        p₂ = Problem([IOExample(Dict(:x => 1), 1)])
+        @test p₁ == p₂
+    end
 end
 
 # Tests for MetricProblem

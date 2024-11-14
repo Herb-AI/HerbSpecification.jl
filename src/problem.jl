@@ -5,7 +5,7 @@ An input-output example.
 `in` is a [`Dict`](@ref) of `{Symbol,Any}` where the symbol represents a variable in a program.
 `out` can be anything.
 """
-struct IOExample{InType, OutType}
+@auto_hash_equals struct IOExample{InType, OutType}
     in::Dict{Symbol, InType}
     out::OutType
 end
@@ -16,7 +16,7 @@ end
 A trace defining a wanted program execution for program synthesis. 
 @TODO combine with Gen.jl
 """
-struct Trace{T}
+@auto_hash_equals struct Trace{T}
     exec_path::Vector{T}
 end
 
@@ -27,7 +27,7 @@ abstract type AbstractFormalSpecification end
 
 A specification based on a logical formula defined by a SMT solver.
 """
-struct SMTSpecification{F} <: AbstractFormalSpecification
+@auto_hash_equals struct SMTSpecification{F} <: AbstractFormalSpecification
     formula::F
 end
 
@@ -46,7 +46,7 @@ abstract type AbstractDependentTypeSpecification <: AbstractTypeSpecification en
 
 Defines a specification 
 """
-struct AgdaSpecification{F} <: AbstractDependentTypeSpecification
+@auto_hash_equals struct AgdaSpecification{F} <: AbstractDependentTypeSpecification
     formula::F
 end
 
@@ -65,7 +65,7 @@ Program synthesis problem defined by an [`AbstractSpecification`](@ref)s. Has a 
 !!! warning
     Please care that concrete `Problem` types with different values of `T` are never subtypes of each other. 
 """
-struct Problem{T <: AbstractSpecification}
+@auto_hash_equals struct Problem{T <: AbstractSpecification}
     name::AbstractString
     spec::T
 
@@ -82,7 +82,7 @@ end
 
 Program synthesis problem defined by an specification and a metric. The specification has to be based on input/output examples, while the function needs to return a numerical value.
 """
-struct MetricProblem{T <: AbstractVector{<:IOExample}, F}
+@auto_hash_equals struct MetricProblem{T <: AbstractVector{<:IOExample}, F}
     name::AbstractString
     cost_function::F
     spec::T
@@ -105,5 +105,3 @@ Overwrite `Base.getindex` to allow for slicing of input/output-based problems.
 """
 Base.getindex(p::Problem{<:AbstractVector{<:IOExample}}, indices) = Problem(p.name, p.spec[indices])
 Base.getindex(p::MetricProblem{<:AbstractVector{<:IOExample}}, indices) = MetricProblem(p.name, p.cost_function, p.spec[indices])
-
-
