@@ -5,9 +5,9 @@ An input-output example.
 `in` is a [`Dict`](@ref) of `{Symbol,Any}` where the symbol represents a variable in a program.
 `out` can be anything.
 """
-struct IOExample
-    in::Dict{Symbol, Any}
-    out::Any
+struct IOExample{InType, OutType}
+    in::Dict{Symbol, InType}
+    out::OutType
 end
 
 """
@@ -16,8 +16,8 @@ end
 A trace defining a wanted program execution for program synthesis. 
 @TODO combine with Gen.jl
 """
-struct Trace
-    exec_path::Vector{Any}
+struct Trace{T}
+    exec_path::Vector{T}
 end
 
 abstract type AbstractFormalSpecification end
@@ -27,8 +27,8 @@ abstract type AbstractFormalSpecification end
 
 A specification based on a logical formula defined by a SMT solver.
 """
-struct SMTSpecification <: AbstractFormalSpecification
-    formula::Function
+struct SMTSpecification{F} <: AbstractFormalSpecification
+    formula::F
 end
 
 
@@ -46,11 +46,16 @@ abstract type AbstractDependentTypeSpecification <: AbstractTypeSpecification en
 
 Defines a specification 
 """
-struct AgdaSpecification <: AbstractDependentTypeSpecification
-    formula::Function
+struct AgdaSpecification{F} <: AbstractDependentTypeSpecification
+    formula::F
 end
 
-const AbstractSpecification = Union{Vector{IOExample}, AbstractFormalSpecification, Vector{Trace}, AbstractTypeSpecification}
+const AbstractSpecification = Union{
+    AbstractVector{<:IOExample},
+    AbstractFormalSpecification, 
+    AbstractVector{<:Trace},
+    AbstractTypeSpecification
+    }
 
 """
     struct Problem
@@ -77,17 +82,17 @@ end
 
 Program synthesis problem defined by an specification and a metric. The specification has to be based on input/output examples, while the function needs to return a numerical value.
 """
-struct MetricProblem{T <: Vector{IOExample}}
+struct MetricProblem{T <: AbstractVector{<:IOExample}, F}
     name::AbstractString
-    cost_function::Function
+    cost_function::F
     spec::T
 
-    function MetricProblem(cost_function::Function, spec::T) where T<:Vector{IOExample}
-        new{T}("", cost_function, spec)
+    function MetricProblem(cost_function::F, spec::T) where {T<:AbstractVector{<:IOExample}, F}
+        new{T, F}("", cost_function, spec)
     end
 
-    function MetricProblem(name::AbstractString, cost_function::Function, spec::T) where T<:Vector{IOExample}
-        new{T}(name, cost_function, spec)
+    function MetricProblem(name::AbstractString, cost_function::F, spec::T) where {T<:AbstractVector{<:IOExample}, F}
+        new{T, F}(name, cost_function, spec)
     end
 
 end
@@ -98,7 +103,7 @@ end
 
 Overwrite `Base.getindex` to allow for slicing of input/output-based problems.
 """
-Base.getindex(p::Problem{Vector{IOExample}}, indices) = Problem(p.name, p.spec[indices])
-Base.getindex(p::MetricProblem{Vector{IOExample}}, indices) = MetricProblem(p.name, p.cost_function, p.spec[indices])
+Base.getindex(p::Problem{<:AbstractVector{<:IOExample}}, indices) = Problem(p.name, p.spec[indices])
+Base.getindex(p::MetricProblem{<:AbstractVector{<:IOExample}}, indices) = MetricProblem(p.name, p.cost_function, p.spec[indices])
 
 
