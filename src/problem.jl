@@ -27,8 +27,8 @@ abstract type AbstractFormalSpecification end
 
 A specification based on a logical formula defined by a SMT solver.
 """
-struct SMTSpecification <: AbstractFormalSpecification
-    formula::Function
+struct SMTSpecification{F} <: AbstractFormalSpecification
+    formula::F
 end
 
 
@@ -46,8 +46,8 @@ abstract type AbstractDependentTypeSpecification <: AbstractTypeSpecification en
 
 Defines a specification 
 """
-struct AgdaSpecification <: AbstractDependentTypeSpecification
-    formula::Function
+struct AgdaSpecification{F} <: AbstractDependentTypeSpecification
+    formula::F
 end
 
 const AbstractSpecification = Union{
@@ -82,17 +82,17 @@ end
 
 Program synthesis problem defined by an specification and a metric. The specification has to be based on input/output examples, while the function needs to return a numerical value.
 """
-struct MetricProblem{T <: AbstractVector{<:IOExample}}
+struct MetricProblem{T <: AbstractVector{<:IOExample}, F}
     name::AbstractString
-    cost_function::Function
+    cost_function::F
     spec::T
 
-    function MetricProblem(cost_function::Function, spec::T) where T<:AbstractVector{<:IOExample}
-        new{T}("", cost_function, spec)
+    function MetricProblem(cost_function::F, spec::T) where {T<:AbstractVector{<:IOExample}, F}
+        new{T, F}("", cost_function, spec)
     end
 
-    function MetricProblem(name::AbstractString, cost_function::Function, spec::T) where T<:AbstractVector{<:IOExample}
-        new{T}(name, cost_function, spec)
+    function MetricProblem(name::AbstractString, cost_function::F, spec::T) where {T<:AbstractVector{<:IOExample}, F}
+        new{T, F}(name, cost_function, spec)
     end
 
 end
