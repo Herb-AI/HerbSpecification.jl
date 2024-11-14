@@ -51,9 +51,9 @@ struct AgdaSpecification{F} <: AbstractDependentTypeSpecification
 end
 
 const AbstractSpecification = Union{
-    Vector{IOExample{T1, T2}} where {T1, T2},
+    AbstractVector{<:IOExample},
     AbstractFormalSpecification, 
-    Vector{Trace{T}} where {T},
+    AbstractVector{<:Trace},
     AbstractTypeSpecification
     }
 
