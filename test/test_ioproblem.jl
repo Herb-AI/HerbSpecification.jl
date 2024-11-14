@@ -28,6 +28,14 @@ end
         @test problem1.name == ""
         @test problem1.spec === spec
 
+        if spec isa Vector{<:IOExample}
+            # Test getindex
+            subproblem = problem1[1:2]
+            @test isa(subproblem, Problem)
+            @test subproblem.spec == spec[1:2]
+            @test subproblem.name == ""
+        end
+
         # Test constructor with a name
         problem_name = "Test Problem"
         problem2 = Problem(problem_name, spec)
@@ -39,7 +47,7 @@ end
             subproblem = problem2[1:2]
             @test isa(subproblem, Problem)
             @test subproblem.spec == spec[1:2]
-            @test subproblem.name == ""
+            @test subproblem.name == problem_name
         end
     end
 end
@@ -67,10 +75,17 @@ end
     @test metric2.spec === spec
     @test metric2.cost_function === cost_function
 
-    # Test getindex
-    submetric = metric2[1:2]
-    @test isa(submetric, MetricProblem)
-    @test submetric.spec == spec[1:2]
-    @test submetric.name == ""
-    @test submetric.cost_function === cost_function
+    # Test getindex without name
+    submetric1 = metric1[1:2]
+    @test isa(submetric1, MetricProblem)
+    @test submetric1.spec == spec[1:2]
+    @test submetric1.name == ""
+    @test submetric1.cost_function === cost_function
+
+    # Test getindex with name
+    submetric2 = metric2[2:3]
+    @test isa(submetric2, MetricProblem)
+    @test submetric2.spec == spec[2:3]
+    @test submetric2.name == name
+    @test submetric2.cost_function === cost_function    
 end

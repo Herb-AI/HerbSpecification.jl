@@ -1,7 +1,7 @@
 name = "HerbSpecification"
 uuid = "6d54aada-062f-46d8-85cf-a1ceaf058a06"
 authors = ["Tilman Hinnerichs <t.r.hinnerichs@tudelft.nl>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 
