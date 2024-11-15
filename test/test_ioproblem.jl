@@ -6,13 +6,37 @@
 
     @test io_example.in == input_dict
     @test io_example.out == output_value
+    @testset "Test Equality" begin
+        e₁ = IOExample(Dict(:x => 1), 1)
+        e₂ = IOExample(Dict(:x => 1), 1)
+        @test e₁ == e₂
+    end
 end
 
-# Tests for Problem
+@testset "Trace Tests" begin
+    t₁ = Trace([:x => 1, :x => 2, :x => 3])
+    t₂ = Trace([:x => 1, :x => 2, :x => 3])
+    @test t₁ == t₂
+end
+
+@testset "SMTSpecification Tests" begin
+    example_formula = identity
+    smt₁ = SMTSpecification(example_formula)
+    smt₂ = SMTSpecification(example_formula)
+    @test smt₁ == smt₂
+end
+
+@testset "AgdaSpecification Tests" begin
+    example_formula = identity
+    agda₁ = AgdaSpecification(example_formula)
+    agda₂ = AgdaSpecification(example_formula)
+    @test agda₁ == agda₂
+end
+
 @testset "Problem Tests" begin
     # Example specs to use in the below tests.
     specs = [
-         [
+        [
             IOExample(Dict(:var1 => 1, :var2 => 2), 3),
             IOExample(Dict(:var1 => 4, :var2 => 5), 6),
             IOExample(Dict(:var1 => 7, :var2 => 8), 9),
@@ -93,5 +117,12 @@ end
     @test isa(submetric2, MetricProblem)
     @test submetric2.spec == spec[2:3]
     @test submetric2.name == name
-    @test submetric2.cost_function === cost_function    
+    @test submetric2.cost_function === cost_function
+
+    @testset "Test Equality" begin
+        cost_function = () -> 1
+        mp₁ = MetricProblem(cost_function , [IOExample(Dict(:x => 1), 1)])
+        mp₂ = MetricProblem(cost_function , [IOExample(Dict(:x => 1), 1)])
+        @test mp₁ == mp₂
+    end
 end
