@@ -1,5 +1,5 @@
 # Tests for IOExample
-@testset "IOExample Tests" begin
+@testitem "IOExample Tests" begin
     input_dict = Dict(:var1 => 42, :var2 => "value")
     output_value = "test output"
     io_example = IOExample(input_dict, output_value)
@@ -13,27 +13,27 @@
     end
 end
 
-@testset "Trace Tests" begin
+@testitem "Trace Tests" begin
     t₁ = Trace([:x => 1, :x => 2, :x => 3])
     t₂ = Trace([:x => 1, :x => 2, :x => 3])
     @test t₁ == t₂
 end
 
-@testset "SMTSpecification Tests" begin
+@testitem "SMTSpecification Tests" begin
     example_formula = identity
     smt₁ = SMTSpecification(example_formula)
     smt₂ = SMTSpecification(example_formula)
     @test smt₁ == smt₂
 end
 
-@testset "AgdaSpecification Tests" begin
+@testitem "AgdaSpecification Tests" begin
     example_formula = identity
     agda₁ = AgdaSpecification(example_formula)
     agda₂ = AgdaSpecification(example_formula)
     @test agda₁ == agda₂
 end
 
-@testset "Problem Tests" begin
+@testitem "Problem Tests" begin
     # Example specs to use in the below tests.
     specs = [
         [
@@ -83,7 +83,7 @@ end
 end
 
 # Tests for MetricProblem
-@testset "MetricProblem Tests" begin
+@testitem "MetricProblem Tests" begin
     # Create a vector of IOExample instances as specification
     spec = [
         IOExample(Dict(:var1 => 1, :var2 => 2), 3),
